@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import api from "@/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -82,7 +82,7 @@ export default function Otp() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => router.replace("/dashboard")}
+            onPress={() => router.replace("/auth/login")}
             style={styles.resendContainer}
           >
             <Text style={styles.resendText}>
