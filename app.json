@@ -1,17 +1,36 @@
 {
   "expo": {
+    "name": "lyf-final",
+    "slug": "lyf-final",
+    "version": "1.0.0",
+    "icon": "./assets/images/vendor.png",
+    "scheme": "lyf-vendor",
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.satya.lyf_vendor",
+      "permissions": ["RECEIVE_SMS", "READ_SMS"] 
+    },
+    "plugins": [
+      "expo-router",
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          }
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ],
     "extra": {
       "eas": {
         "projectId": "4b5feb6b-d63e-4af0-bee2-0e0e8be3fe72"
       }
     },
-    "android": {
-      "package": "com.satya.lyf_vendor"
-    },
-    "plugins": [
-      "expo-asset",
-      "expo-font"
-    ],
     "owner": "satyaisn"
   }
 }

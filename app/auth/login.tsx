@@ -1,9 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
-import { auth, firebaseConfig } from "@/services/firebase";
-import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { useRouter } from "expo-router";
-import { signInWithPhoneNumber } from "firebase/auth";
 import React, { useRef, useState } from "react";
+ 
 import {
   Dimensions,
   StatusBar,
@@ -14,24 +12,22 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import auth from '@react-native-firebase/auth';
 const { width } = Dimensions.get("window");
 export default function Login() {
   const [phone, setPhone] = useState("");
-  const recaptchaRef = useRef<any>(null);
   const router = useRouter();
   const { setConfirmation } = useAuth();
+  
   const sendOtp = async () => {
     if (phone.length !== 10) {
       alert("Please enter a valid 10-digit mobile number");
       return;
     }
+    console.log("auth:",auth)
     try {
-      const res = await signInWithPhoneNumber(
-        auth,
-        "+91" + phone,
-        recaptchaRef.current,
-      );
-      setConfirmation(res);
+      const confirmation = await auth().signInWithPhoneNumber('+91' + phone);
+      setConfirmation(confirmation);
       router.push("/auth/otp");
     } catch (e) {
       console.log(e);
@@ -42,7 +38,6 @@ export default function Login() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#16a34a" />
-
       {/* Green Header Section */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Welcome to LYF</Text>
@@ -51,11 +46,6 @@ export default function Login() {
 
       {/* Input Section */}
       <View style={styles.content}>
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaRef}
-          firebaseConfig={firebaseConfig}
-        />
-
         <Text style={styles.inputLabel}>Mobile Number</Text>
 
         <View style={styles.inputContainer}>
@@ -69,7 +59,6 @@ export default function Login() {
             style={styles.textInput}
           />
         </View>
-
         <Text style={styles.infoText}>
           We will send a 6-digit OTP to your mobile number.
         </Text>
